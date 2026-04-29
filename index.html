@@ -30,7 +30,7 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* ── LOGIN SCREEN ── */
-.login-screen{position:fixed;inset:0;background:var(–bg);z-index:99000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:24px}
+.login-screen{position:fixed;inset:0;background:var(–bg);z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:24px}
 .login-screen.hidden{display:none}
 .login-logo{font-family:‘Unbounded’,sans-serif;font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#fff 30%,#a8ff3e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.03em;text-align:center}
 .login-sub{font-size:.82rem;color:var(–muted);text-align:center;line-height:1.7;max-width:280px}
@@ -492,7 +492,7 @@ function initFirebase(){
     appId:"1:896027784662:web:e2a676295a76983f31e077"
   });
   db=firebase.firestore();
-  firebase.auth().onAuthStateChanged(function(user){
+  firebase.auth().onAuthStateChanged(function(user){ document.getElementById('ls').classList.add('hidden');
     if(user){
       currentUser=user;
       document.getElementById('loginScreen').classList.add('hidden');
