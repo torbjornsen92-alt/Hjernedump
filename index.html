@@ -44,8 +44,8 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
 .logout-btn:hover{border-color:var(–coral);color:var(–coral)}
 
 /* ── DUMP SCREEN ── */
-.dump-screen{position:fixed;inset:0;background:var(–bg);z-index:8000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:20px;transition:opacity .3s,transform .3s}
-.dump-screen.hidden{opacity:0;pointer-events:none;transform:scale(.97)}
+.dump-screen{position:fixed;inset:0;background:var(–bg);z-index:8000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:20px;transition:opacity .3s,transform .3s}
+.dump-screen.hidden{display:none}.dump-screen.visible{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:20px}
 .dump-logo{font-family:‘Unbounded’,sans-serif;font-size:1.2rem;font-weight:900;background:linear-gradient(135deg,#fff 30%,#a8ff3e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.03em;opacity:.6}
 .dump-area{width:100%;max-width:500px;display:flex;flex-direction:column;gap:12px}
 .dump-textarea{width:100%;background:var(–surface);border:1.5px solid var(–border);border-radius:18px;color:var(–text);font-family:‘Instrument Sans’,sans-serif;font-size:1.15rem;line-height:1.7;padding:20px;outline:none;resize:none;min-height:120px;caret-color:var(–lime);transition:border-color .2s}
@@ -457,14 +457,14 @@ function submitDump(){
     plannedDate:'',createdAt:nowT(),createdTimestamp:Date.now(),subtasks:[],showSub:false};
   if(dumpType==='done'){it.doneAt=nowT();it.doneDateStr=today();}
   itemsCol.add(it).then(function(){
-    document.getElementById('dumpScreen').classList.add('hidden');
+    document.getElementById('dumpScreen').classList.remove('visible');
   }).catch(function(){
-    document.getElementById('dumpScreen').classList.add('hidden');
+    document.getElementById('dumpScreen').classList.remove('visible');
   });
 }
 
 function skipDump(){
-  document.getElementById('dumpScreen').classList.add('hidden');
+  document.getElementById('dumpScreen').classList.remove('visible');
 }
 
 document.getElementById('dumpInput').addEventListener('keydown',function(e){
@@ -499,7 +499,7 @@ function initFirebase(){
       document.getElementById('userBar').style.display='flex';
       document.getElementById('userName').textContent=user.displayName||user.email;
       if(user.photoURL)document.getElementById('userAvatar').src=user.photoURL;
-      startApp(user.uid);
+      document.getElementById('dumpScreen').classList.add('visible'); startApp(user.uid);
     }else{
       currentUser=null;
       document.getElementById('loginScreen').classList.remove('hidden');
