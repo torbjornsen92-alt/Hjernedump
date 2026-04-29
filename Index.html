@@ -29,6 +29,84 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
 .loading-spinner{width:32px;height:32px;border:3px solid var(–surface2);border-top-color:var(–accent);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ── LOGIN SCREEN ── */
+.login-screen{position:fixed;inset:0;background:var(–bg);z-index:99000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:24px}
+.login-screen.hidden{display:none}
+.login-logo{font-family:‘Unbounded’,sans-serif;font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#fff 30%,#a8ff3e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.03em;text-align:center}
+.login-sub{font-size:.82rem;color:var(–muted);text-align:center;line-height:1.7;max-width:280px}
+.login-btn{display:flex;align-items:center;gap:12px;background:var(–surface);border:1.5px solid var(–border);border-radius:14px;color:var(–text);font-family:‘Instrument Sans’,sans-serif;font-size:.92rem;font-weight:600;padding:14px 24px;cursor:pointer;transition:border-color .2s,background .2s;width:100%;max-width:280px;justify-content:center}
+.login-btn:hover{border-color:var(–accent);background:var(–surface2)}
+.login-btn svg{width:20px;height:20px;flex-shrink:0}
+.user-bar{display:flex;align-items:center;gap:8px;padding:8px 0 0}
+.user-avatar{width:28px;height:28px;border-radius:50%;border:2px solid var(–border)}
+.user-name{font-size:.7rem;color:var(–muted);flex:1}
+.logout-btn{background:transparent;border:1px solid var(–border);border-radius:7px;color:var(–muted);font-size:.62rem;padding:4px 9px;cursor:pointer;font-family:inherit;transition:all .15s}
+.logout-btn:hover{border-color:var(–coral);color:var(–coral)}
+
+/* ── DUMP SCREEN ── */
+.dump-screen{position:fixed;inset:0;background:var(–bg);z-index:8000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:20px;transition:opacity .3s,transform .3s}
+.dump-screen.hidden{opacity:0;pointer-events:none;transform:scale(.97)}
+.dump-logo{font-family:‘Unbounded’,sans-serif;font-size:1.2rem;font-weight:900;background:linear-gradient(135deg,#fff 30%,#a8ff3e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.03em;opacity:.6}
+.dump-area{width:100%;max-width:500px;display:flex;flex-direction:column;gap:12px}
+.dump-textarea{width:100%;background:var(–surface);border:1.5px solid var(–border);border-radius:18px;color:var(–text);font-family:‘Instrument Sans’,sans-serif;font-size:1.15rem;line-height:1.7;padding:20px;outline:none;resize:none;min-height:120px;caret-color:var(–lime);transition:border-color .2s}
+.dump-textarea::placeholder{color:var(–muted)}
+.dump-textarea:focus{border-color:var(–accent)}
+.dump-actions{display:flex;gap:8px;align-items:center}
+.dump-btn{flex:1;background:linear-gradient(135deg,var(–accent),#a855f7);color:#fff;border:none;border-radius:12px;font-family:‘Unbounded’,sans-serif;font-size:.72rem;font-weight:700;padding:14px;cursor:pointer;letter-spacing:.02em}
+.dump-skip{background:transparent;border:1px solid var(–border);border-radius:12px;color:var(–muted);font-family:‘Instrument Sans’,sans-serif;font-size:.72rem;padding:14px 16px;cursor:pointer;white-space:nowrap;transition:border-color .2s,color .2s}
+.dump-skip:hover{border-color:var(–muted);color:var(–text)}
+.dump-hint{font-size:.62rem;color:var(–muted);text-align:center;line-height:1.6}
+.dump-type-row{display:flex;gap:6px;flex-wrap:wrap}
+.dchip{background:var(–surface);border:1.5px solid transparent;border-radius:8px;color:var(–muted);font-size:.62rem;font-weight:600;padding:6px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.04em;transition:all .15s;font-family:‘Instrument Sans’,sans-serif}
+.dchip.dc-todo{border-color:var(–lime);color:var(–lime);background:#a8ff3e12}
+.dchip.dc-done{border-color:var(–sky);color:var(–sky);background:#38bdf812}
+.dchip.dc-idea{border-color:var(–gold);color:var(–gold);background:#ffd70012}
+
+/* ── REMINDERS PANEL ── */
+.reminder-fab{position:fixed;bottom:24px;right:20px;background:linear-gradient(135deg,var(–accent),#a855f7);border:none;border-radius:16px;color:#fff;font-size:1.2rem;width:52px;height:52px;cursor:pointer;box-shadow:0 4px 20px var(–accent-glow);z-index:7000;display:flex;align-items:center;justify-content:center;transition:transform .2s}
+.reminder-fab:hover{transform:scale(1.08)}
+.reminder-fab .rbadge{position:absolute;top:-5px;right:-5px;background:var(–coral);color:#fff;font-family:‘Unbounded’,sans-serif;font-size:.5rem;font-weight:700;padding:2px 5px;border-radius:99px;min-width:18px;text-align:center;display:none}
+.reminder-fab .rbadge.show{display:block}
+
+.reminder-panel{position:fixed;inset:0;background:#000c;z-index:7500;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.reminder-panel.open{opacity:1;pointer-events:all}
+@media(min-width:500px){.reminder-panel{align-items:center;padding:20px}}
+.rpanel-inner{background:var(–surface);border:1px solid var(–border);border-radius:20px 20px 0 0;padding:24px 20px 32px;width:100%;max-width:500px;max-height:85vh;overflow-y:auto;transform:translateY(40px);transition:transform .25s}
+@media(min-width:500px){.rpanel-inner{border-radius:20px;transform:translateY(20px)}}
+.reminder-panel.open .rpanel-inner{transform:translateY(0)}
+.rp-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.rp-title{font-family:‘Unbounded’,sans-serif;font-size:.9rem;font-weight:700}
+.rp-x{background:var(–surface2);border:none;color:var(–muted);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.rp-add{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;background:var(–surface2);border-radius:14px;padding:14px}
+.rp-add-title{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(–muted);font-weight:600}
+.rp-input{background:var(–bg);border:1px solid var(–border);border-radius:10px;color:var(–text);font-family:inherit;font-size:.88rem;padding:10px 12px;outline:none;width:100%}
+.rp-input:focus{border-color:var(–accent)}
+.rp-row{display:flex;gap:8px;align-items:center}
+.rp-time{background:var(–bg);border:1px solid var(–border);border-radius:10px;color:var(–text);font-family:inherit;font-size:.88rem;padding:10px 12px;outline:none;flex:1}
+.rp-time:focus{border-color:var(–accent)}
+.rp-save{background:linear-gradient(135deg,var(–accent),#a855f7);color:#fff;border:none;border-radius:10px;font-family:‘Unbounded’,sans-serif;font-size:.64rem;font-weight:700;padding:11px 16px;cursor:pointer;white-space:nowrap}
+.rp-list{display:flex;flex-direction:column;gap:8px}
+.rp-list-title{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(–muted);font-weight:600;margin-bottom:4px}
+.ritem{background:var(–surface2);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;border-left:3px solid var(–accent)}
+.ritem.fired{border-left-color:var(–lime);opacity:.6}
+.ritem-body{flex:1;min-width:0}
+.ritem-text{font-size:.88rem;line-height:1.4;word-break:break-word}
+.ritem-time{font-size:.6rem;color:var(–muted);margin-top:3px}
+.ritem-del{background:transparent;border:none;color:var(–muted);cursor:pointer;font-size:.9rem;padding:4px;border-radius:6px;transition:color .15s}
+.ritem-del:hover{color:var(–coral)}
+.rempty{text-align:center;padding:20px;color:var(–muted);font-size:.82rem}
+
+/* ── NOTIFICATION TOAST ── */
+.notif-toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-120px);background:var(–surface);border:1px solid var(–accent);border-radius:16px;padding:14px 20px;max-width:340px;width:calc(100% - 40px);z-index:99000;transition:transform .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 32px var(–accent-glow)}
+.notif-toast.show{transform:translateX(-50%) translateY(0)}
+.notif-inner{display:flex;align-items:flex-start;gap:12px}
+.notif-icon{font-size:1.4rem;flex-shrink:0}
+.notif-body{flex:1}
+.notif-title{font-family:‘Unbounded’,sans-serif;font-size:.7rem;font-weight:700;color:var(–lime);margin-bottom:4px}
+.notif-msg{font-size:.82rem;line-height:1.5;color:var(–text)}
+.notif-close{background:transparent;border:none;color:var(–muted);cursor:pointer;font-size:.9rem;flex-shrink:0;padding:2px}
+
+/* ── EXISTING STYLES ── */
 .sync-bar{display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:10px 0 0;font-size:.62rem;color:var(–muted);text-transform:uppercase;letter-spacing:.06em}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:var(–muted);flex-shrink:0;transition:background .3s}
 .sync-dot.synced{background:var(–lime);box-shadow:0 0 6px var(–lime-glow)}
@@ -200,6 +278,49 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
   <div class="loading-spinner"></div>
 </div>
 
+<!-- LOGIN SCREEN -->
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-logo">Hjernedump</div>
+  <div class="login-sub">Din personlige hjernedump.<br>Logg inn for å komme i gang.</div>
+  <button class="login-btn" onclick="signInGoogle()">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+    Logg inn med Google
+  </button>
+</div>
+
+<!-- DUMP SCREEN -->
+
+<div class="dump-screen" id="dumpScreen">
+  <div class="dump-logo">Hjernedump</div>
+  <div class="dump-area">
+    <textarea class="dump-textarea" id="dumpInput" placeholder="Hva er oppe i lufta akkurat nå? Bare dump det ut..." rows="4"></textarea>
+    <div class="dump-type-row">
+      <div class="dchip dc-todo" id="dc-todo" onclick="setDumpType('todo')">☐ Gjøre</div>
+      <div class="dchip" id="dc-done" onclick="setDumpType('done')">✓ Gjort</div>
+      <div class="dchip" id="dc-idea" onclick="setDumpType('idea')">✦ Idé</div>
+    </div>
+    <div class="dump-actions">
+      <button class="dump-btn" onclick="submitDump()">Dump og gå videre →</button>
+      <button class="dump-skip" onclick="skipDump()">Hopp over</button>
+    </div>
+    <div class="dump-hint">Ingenting å dumpe? Trykk «Hopp over».<br>Skriv så mye eller lite du vil – Claude sorterer det ikke.</div>
+  </div>
+</div>
+
+<!-- REMINDER NOTIFICATION TOAST -->
+
+<div class="notif-toast" id="notifToast">
+  <div class="notif-inner">
+    <div class="notif-icon">⏰</div>
+    <div class="notif-body">
+      <div class="notif-title">Påminnelse</div>
+      <div class="notif-msg" id="notifMsg"></div>
+    </div>
+    <button class="notif-close" onclick="closeNotif()">✕</button>
+  </div>
+</div>
+
 <canvas id="cc"></canvas>
 
 <div id="toast" class="toast">⚡ XP!</div>
@@ -214,10 +335,43 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
   </div>
 </div>
 
+<!-- REMINDER PANEL -->
+
+<div class="reminder-panel" id="reminderPanel" onclick="reminderPanelClick(event)">
+  <div class="rpanel-inner">
+    <div class="rp-hdr">
+      <div class="rp-title">⏰ Påminnelser</div>
+      <button class="rp-x" onclick="closeReminderPanel()">✕</button>
+    </div>
+    <div class="rp-add">
+      <div class="rp-add-title">Ny påminnelse</div>
+      <input class="rp-input" id="rp-text" placeholder="Hva vil du bli minnet på?" />
+      <div class="rp-row">
+        <input class="rp-time" type="time" id="rp-time" />
+        <button class="rp-save" onclick="addReminder()">+ Legg til</button>
+      </div>
+    </div>
+    <div class="rp-list-title">Aktive påminnelser</div>
+    <div class="rp-list" id="rpList"></div>
+  </div>
+</div>
+
+<!-- REMINDER FAB -->
+
+<button class="reminder-fab" onclick="openReminderPanel()" title="Påminnelser">
+  ⏰
+  <div class="rbadge" id="rbadge">0</div>
+</button>
+
 <div class="app">
   <div class="sync-bar">
     <div class="sync-dot" id="sdot"></div>
     <span id="slabel">Kobler til...</span>
+  </div>
+  <div class="user-bar" id="userBar" style="display:none">
+    <img class="user-avatar" id="userAvatar" src="" alt="">
+    <span class="user-name" id="userName"></span>
+    <button class="logout-btn" onclick="signOut()">Logg ut</button>
   </div>
   <div class="header">
     <div class="logo">Hjernedump</div>
@@ -263,25 +417,72 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-var db,itemsCol,metaCol;
 var items=[],xp=0,streak=0,lastDoneDate='',curMode='work';
 var curScope='today',curType='todo',curTab='todo';
 var reportOffset=0,planFilter='all';
+var dumpType='todo';
 
-// Wait for Firebase to be available
+function resetDailyReminders(){
+  var now=new Date();
+  var msTillMidnight=(24*60*60*1000)-(now.getHours()*3600000+now.getMinutes()*60000+now.getSeconds()*1000);
+  setTimeout(function(){
+    if(remindersCol){
+      reminders.forEach(function(r){
+        if(r.fired)remindersCol.doc(r.id).update({fired:false});
+      });
+    }
+    resetDailyReminders();
+  },msTillMidnight+1000);
+}
+
+// ── DUMP SCREEN ──
+function setDumpType(t){
+  dumpType=t;
+  document.getElementById('dc-todo').className='dchip'+(t==='todo'?' dc-todo':'');
+  document.getElementById('dc-done').className='dchip'+(t==='done'?' dc-done':'');
+  document.getElementById('dc-idea').className='dchip'+(t==='idea'?' dc-idea':'');
+}
+
+function submitDump(){
+  if(!itemsCol){skipDump();return;}
+  var txt=document.getElementById('dumpInput').value.trim();
+  if(!txt){skipDump();return;}
+  setSyncStatus('syncing');
+  var it={text:txt,type:dumpType,scope:'today',mode:curMode,date:today(),week:thisWeek(),
+    plannedDate:'',createdAt:nowT(),createdTimestamp:Date.now(),subtasks:[],showSub:false};
+  if(dumpType==='done'){it.doneAt=nowT();it.doneDateStr=today();}
+  itemsCol.add(it).then(function(){
+    document.getElementById('dumpScreen').classList.add('hidden');
+  }).catch(function(){
+    document.getElementById('dumpScreen').classList.add('hidden');
+  });
+}
+
+function skipDump(){
+  document.getElementById('dumpScreen').classList.add('hidden');
+}
+
+document.getElementById('dumpInput').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submitDump();}
+});
+
+// ── FIREBASE + AUTH ──
+var db,itemsCol,metaCol,remindersCol;
+var currentUser=null;
+var reminders=[];
+
 function waitForFirebase(){
-  if(typeof firebase!=='undefined'&&firebase.firestore){
-    startApp();
-  }else{
-    setTimeout(waitForFirebase,50);
-  }
+  if(typeof firebase!=='undefined'&&firebase.auth){initFirebase();}
+  else{setTimeout(waitForFirebase,50);}
 }
 waitForFirebase();
 
-function startApp(){
+function initFirebase(){
   firebase.initializeApp({
     apiKey:"AIzaSyCpLVZW02EacYpJbD1GJjtGKtmOtkBHtYE",
     authDomain:"hjernedump.firebaseapp.com",
@@ -291,10 +492,38 @@ function startApp(){
     appId:"1:896027784662:web:e2a676295a76983f31e077"
   });
   db=firebase.firestore();
-  itemsCol=db.collection('items');
-  metaCol=db.collection('meta');
+  firebase.auth().onAuthStateChanged(function(user){
+    if(user){
+      currentUser=user;
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('userBar').style.display='flex';
+      document.getElementById('userName').textContent=user.displayName||user.email;
+      if(user.photoURL)document.getElementById('userAvatar').src=user.photoURL;
+      startApp(user.uid);
+    }else{
+      currentUser=null;
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('ls').classList.add('hidden');
+      document.getElementById('userBar').style.display='none';
+    }
+  });
+}
+
+function signInGoogle(){
+  var provider=new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider).catch(function(e){alert('Innlogging feilet: '+e.message);});
+}
+
+function signOut(){
+  if(!confirm('Logg ut?'))return;
+  firebase.auth().signOut();
+}
+
+function startApp(uid){
+  itemsCol=db.collection('users').doc(uid).collection('items');
+  metaCol=db.collection('users').doc(uid).collection('meta');
+  remindersCol=db.collection('users').doc(uid).collection('reminders');
   setSyncStatus('syncing');
-  // Load meta and listener in parallel - don't block on meta
   metaCol.get().then(function(snap){
     snap.forEach(function(d){
       var v=d.data();xp=v.xp||0;streak=v.streak||0;
@@ -303,12 +532,74 @@ function startApp(){
     });
     updateModeUI();updateXP();
   }).catch(function(){});
-  // Start listener immediately regardless of meta
   startListener();
+  loadReminders();
+  setInterval(checkReminders,30000);
+  resetDailyReminders();
+}
+
+function loadReminders(){
+  if(!remindersCol)return;
+  remindersCol.onSnapshot(function(snap){
+    reminders=snap.docs.map(function(d){return Object.assign({},d.data(),{id:d.id});});
+    renderReminderList();
+    updateReminderBadge();
+  });
+}
+
+function addReminder(){
+  var txt=document.getElementById('rp-text').value.trim();
+  var time=document.getElementById('rp-time').value;
+  if(!txt||!time){alert('Fyll inn tekst og tidspunkt.');return;}
+  if(!remindersCol)return;
+  remindersCol.add({text:txt,time:time,fired:false,date:today(),createdAt:Date.now()});
+  document.getElementById('rp-text').value='';
+  document.getElementById('rp-time').value='';
+}
+
+function deleteReminder(id){
+  if(!remindersCol)return;
+  remindersCol.doc(id).delete();
+}
+
+function renderReminderList(){
+  var el=document.getElementById('rpList');
+  if(!el)return;
+  if(!reminders.length){el.innerHTML='<div class="rempty">Ingen påminnelser ennå</div>';return;}
+  var sorted=reminders.slice().sort(function(a,b){return(a.time||'').localeCompare(b.time||'');});
+  el.innerHTML=sorted.map(function(r){
+    return'<div class="ritem'+(r.fired?' fired':'')+'">'+
+      '<div class="ritem-body">'+
+        '<div class="ritem-text">'+esc(r.text)+'</div>'+
+        '<div class="ritem-time">⏰ '+r.time+(r.fired?' · Varslet':'')+'</div>'+
+      '</div>'+
+      '<button class="ritem-del" onclick="deleteReminder(\''+r.id+'\')">✕</button>'+
+    '</div>';
+  }).join('');
+}
+
+function updateReminderBadge(){
+  var active=reminders.filter(function(r){return!r.fired;}).length;
+  var badge=document.getElementById('rbadge');
+  badge.textContent=active;
+  badge.className='rbadge'+(active>0?' show':'');
+}
+
+function checkReminders(){
+  if(!remindersCol)return;
+  var now=new Date();
+  var hh=String(now.getHours()).padStart(2,'0');
+  var mm=String(now.getMinutes()).padStart(2,'0');
+  var nowStr=hh+':'+mm;
+  reminders.forEach(function(r){
+    if(!r.fired&&r.time===nowStr){
+      remindersCol.doc(r.id).update({fired:true});
+      showNotif(r.text);
+    }
+  });
 }
 
 function startListener(){
-  // Fallback: hide loading screen after 4 seconds no matter what
   setTimeout(function(){document.getElementById('ls').classList.add('hidden');},4000);
   itemsCol.onSnapshot(function(snap){
     items=snap.docs.map(function(d){return Object.assign({},d.data(),{_id:d.id});});
