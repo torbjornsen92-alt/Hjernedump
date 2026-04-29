@@ -21,7 +21,7 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{min-height:100%;width:100%}
 body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-serif;overflow-x:hidden}
-.app{max-width:720px;margin:0 auto;padding:0 16px 100px}
+.app{max-width:720px;margin:0 auto;padding:0 16px 100px}.app.hidden{display:none}.reminder-fab.hidden{display:none}
 
 .loading-screen{position:fixed;inset:0;background:var(–bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;gap:16px}
 .loading-screen.hidden{opacity:0;pointer-events:none;visibility:hidden}
@@ -358,12 +358,12 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
 
 <!-- REMINDER FAB -->
 
-<button class="reminder-fab" onclick="openReminderPanel()" title="Påminnelser">
+<button class="reminder-fab hidden" id="reminderFab" onclick="openReminderPanel()" title="Påminnelser">
   ⏰
   <div class="rbadge" id="rbadge">0</div>
 </button>
 
-<div class="app">
+<div class="app hidden" id="mainApp">
   <div class="sync-bar">
     <div class="sync-dot" id="sdot"></div>
     <span id="slabel">Kobler til...</span>
@@ -499,7 +499,7 @@ function initFirebase(){
       document.getElementById('userBar').style.display='flex';
       document.getElementById('userName').textContent=user.displayName||user.email;
       if(user.photoURL)document.getElementById('userAvatar').src=user.photoURL;
-      document.getElementById('dumpScreen').classList.add('visible'); startApp(user.uid);
+      document.getElementById('mainApp').classList.remove('hidden'); document.getElementById('reminderFab').classList.remove('hidden'); document.getElementById('dumpScreen').classList.add('visible'); startApp(user.uid);
     }else{
       currentUser=null;
       document.getElementById('loginScreen').classList.remove('hidden');
