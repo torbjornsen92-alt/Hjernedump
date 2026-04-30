@@ -24,7 +24,7 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
 .app{max-width:720px;margin:0 auto;padding:0 16px 100px}.app.hidden{display:none}.reminder-fab.hidden{display:none}
 
 .loading-screen{position:fixed;inset:0;background:var(–bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;gap:16px}
-.loading-screen.hidden{opacity:0;pointer-events:none;visibility:hidden}
+.loading-screen.hidden{display:none}
 .loading-logo{font-family:‘Unbounded’,sans-serif;font-size:1.8rem;font-weight:900;background:linear-gradient(135deg,#fff 30%,#a8ff3e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .loading-spinner{width:32px;height:32px;border:3px solid var(–surface2);border-top-color:var(–accent);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -273,7 +273,7 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
 </head>
 <body>
 
-<div class="loading-screen" id="ls">
+<div class="loading-screen hidden" id="ls">
   <div class="loading-logo">Hjernedump</div>
   <div class="loading-spinner"></div>
 </div>
