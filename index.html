@@ -492,6 +492,7 @@ function initFirebase(){
     appId:"1:896027784662:web:e2a676295a76983f31e077"
   });
   db=firebase.firestore();
+  firebase.auth().getRedirectResult().catch(function(e){console.error('Redirect error:',e);});
   firebase.auth().onAuthStateChanged(function(user){ document.getElementById('ls').classList.add('hidden');
     if(user){
       currentUser=user;
