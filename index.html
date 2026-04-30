@@ -512,7 +512,7 @@ function initFirebase(){
 
 function signInGoogle(){
   var provider=new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithRedirect(provider);
+  firebase.auth().signInWithPopup(provider).then(function(r){console.log("Login ok");}).catch(function(e){console.error("Login error:",e.code,e.message);alert(e.message);});
 }
 
 function signOut(){
