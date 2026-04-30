@@ -397,8 +397,13 @@ firebase.initializeApp({
 db=firebase.firestore();
 auth=firebase.auth();
 
-document.getElementById('loginBtn').addEventListener('click',function(){ document.getElementById('loginBtn').textContent='Klikket! Venter...';
-  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function(e){alert('Feil: '+e.message);});
+auth.getRedirectResult().then(function(result){
+  if(result && result.user){ console.log('Redirect login ok'); }
+}).catch(function(e){ if(e.code !== 'auth/no-current-user') alert('Innlogging feilet: '+e.message); });
+
+document.getElementById('loginBtn').addEventListener('click',function(){
+  document.getElementById('loginBtn').textContent='Omdirigerer...';
+  auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
 });
 
 auth.onAuthStateChanged(function(user){
