@@ -232,7 +232,7 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
 </style>
 </head>
 <body>
-<div id="loginScreen">
+<div id="loginScreen" class="hidden">
   <div class="login-logo">Hjernedump</div>
   <div class="login-sub">Din personlige hjernedump.<br>Logg inn for å komme i gang.</div>
   <button class="login-btn" id="loginBtn">
@@ -362,6 +362,13 @@ getRedirectResult(auth).catch(function(e) {
   }
 });
 
+// Show login screen after short delay only if not already logged in
+setTimeout(function() {
+  if (document.getElementById('loginScreen').classList.contains('hidden') === false) {
+    // still showing, means no user yet - keep it visible
+  }
+}, 100);
+
 onAuthStateChanged(auth, function(user) {
   if (user) {
     document.getElementById('loginScreen').classList.add('hidden');
@@ -372,7 +379,10 @@ onAuthStateChanged(auth, function(user) {
     document.getElementById('dumpScreen').classList.add('visible');
     window.__startApp(user.uid);
   } else {
-    document.getElementById('loginScreen').classList.remove('hidden');
+    // Small delay to avoid flash
+    setTimeout(function() {
+      document.getElementById('loginScreen').classList.remove('hidden');
+    }, 200);
     document.getElementById('mainApp').classList.remove('visible');
     document.getElementById('reminderFab').classList.remove('visible');
     document.getElementById('dumpScreen').classList.remove('visible');
