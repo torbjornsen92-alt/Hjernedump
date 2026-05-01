@@ -37,6 +37,7 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
 .dump-btn{flex:1;background:linear-gradient(135deg,var(--accent),#a855f7);color:#fff;border:none;border-radius:12px;font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;padding:14px;cursor:pointer}
 .dump-skip{background:transparent;border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:'Instrument Sans',sans-serif;font-size:.72rem;padding:14px 16px;cursor:pointer}
 .dump-hint{font-size:.62rem;color:var(--muted);text-align:center;line-height:1.6}
+.dump-back{background:transparent;border:none;color:var(--muted);font-family:'Instrument Sans',sans-serif;font-size:.75rem;padding:8px;cursor:pointer;text-decoration:underline}
 #mainApp{display:none}
 #mainApp.visible{display:block}
 .app{max-width:720px;margin:0 auto;padding:0 16px 100px}
@@ -253,6 +254,7 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
       <button class="dump-skip" onclick="skipDump()">Hopp over</button>
     </div>
     <div class="dump-hint">Ingenting å dumpe? Trykk «Hopp over».</div>
+    <button class="dump-back" onclick="skipDump()">← Gå til appen</button>
   </div>
 </div>
 <div class="notif-toast" id="notifToast">
@@ -417,7 +419,11 @@ function saveMeta(){if(!_metaCol||!window._mid)return;window.__fb.updateDoc(_mDo
 
 function setDumpType(t){dumpType=t;document.getElementById('dc-todo').className='dchip'+(t==='todo'?' dc-todo':'');document.getElementById('dc-done').className='dchip'+(t==='done'?' dc-done':'');document.getElementById('dc-idea').className='dchip'+(t==='idea'?' dc-idea':'');}
 function submitDump(){if(!_itemsCol){skipDump();return;}var txt=document.getElementById('dumpInput').value.trim();if(!txt){skipDump();return;}var it={text:txt,type:dumpType,scope:'today',mode:curMode,date:today(),week:thisWeek(),plannedDate:'',createdAt:nowT(),createdTimestamp:Date.now(),subtasks:[],showSub:false};if(dumpType==='done'){it.doneAt=nowT();it.doneDateStr=today();}window.__fb.addDoc(_itemsCol,it).then(skipDump).catch(skipDump);}
-function skipDump(){document.getElementById('dumpScreen').classList.remove('visible');}
+function skipDump(){
+  var ds = document.getElementById('dumpScreen');
+  ds.classList.remove('visible');
+  ds.style.display = 'none';
+}
 document.getElementById('dumpInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submitDump();}});
 
 function addReminder(){var txt=document.getElementById('rp-text').value.trim();var time=document.getElementById('rp-time').value;if(!txt||!time){alert('Fyll inn tekst og tidspunkt.');return;}if(!_remindersCol)return;window.__fb.addDoc(_remindersCol,{text:txt,time:time,fired:false,date:today(),createdAt:Date.now()});document.getElementById('rp-text').value='';document.getElementById('rp-time').value='';}
