@@ -240,41 +240,7 @@ body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-s
     Logg inn med Google
   </button>
 </div>
-<div id="dumpScreen" style="display:none">
-  <div class="dump-logo">Hjernedump</div>
-  <div class="dump-area">
-    <textarea class="dump-textarea" id="dumpInput" placeholder="Hva er oppe i lufta akkurat nå? Bare dump det ut..." rows="4"></textarea>
-    <div class="dump-type-row">
-      <div class="dchip dc-todo" id="dc-todo" onclick="setDumpType('todo')">☐ Gjøre</div>
-      <div class="dchip" id="dc-done" onclick="setDumpType('done')">✓ Gjort</div>
-      <div class="dchip" id="dc-idea" onclick="setDumpType('idea')">✦ Idé</div>
-    </div>
-    <div class="dump-actions">
-      <button class="dump-btn" onclick="submitDump()">Dump og gå videre →</button>
-      <button class="dump-skip" onclick="skipDump()">Hopp over</button>
-    </div>
-    <div class="dump-hint">Ingenting å dumpe? Trykk «Hopp over».</div>
-    <button class="dump-back" onclick="skipDump()">← Gå til appen</button>
-  </div>
-</div>
-<div class="notif-toast" id="notifToast">
-  <div class="notif-inner">
-    <div class="notif-icon">⏰</div>
-    <div class="notif-body">
-      <div class="notif-title">Påminnelse</div>
-      <div class="notif-msg" id="notifMsg"></div>
-    </div>
-    <button class="notif-close" onclick="closeNotif()">✕</button>
-  </div>
-</div>
-<canvas id="cc"></canvas>
-<div id="toast" class="toast">⚡ XP!</div>
-<div class="overlay" id="ov" onclick="ovClick(event)">
-  <div class="modal">
-    <div class="modal-hdr"><div class="modal-title" id="mtitle"></div><button class="modal-x" onclick="closeModal()">✕</button></div>
-    <div id="mbody"></div>
-  </div>
-</div>
+
 <div class="reminder-panel" id="reminderPanel" onclick="reminderPanelClick(event)">
   <div class="rpanel-inner">
     <div class="rp-hdr"><div class="rp-title">⏰ Påminnelser</div><button class="rp-x" onclick="closeReminderPanel()">✕</button></div>
@@ -429,12 +395,8 @@ function saveMeta(){if(!_metaCol||!window._mid)return;window.__fb.updateDoc(_mDo
 
 function setDumpType(t){dumpType=t;document.getElementById('dc-todo').className='dchip'+(t==='todo'?' dc-todo':'');document.getElementById('dc-done').className='dchip'+(t==='done'?' dc-done':'');document.getElementById('dc-idea').className='dchip'+(t==='idea'?' dc-idea':'');}
 function submitDump(){if(!_itemsCol){skipDump();return;}var txt=document.getElementById('dumpInput').value.trim();if(!txt){skipDump();return;}var it={text:txt,type:dumpType,scope:'today',mode:curMode,date:today(),week:thisWeek(),plannedDate:'',createdAt:nowT(),createdTimestamp:Date.now(),subtasks:[],showSub:false};if(dumpType==='done'){it.doneAt=nowT();it.doneDateStr=today();}window.__fb.addDoc(_itemsCol,it).then(skipDump).catch(skipDump);}
-function skipDump(){
-  var ds = document.getElementById('dumpScreen');
-  ds.classList.remove('visible');
-  ds.style.display = 'none';
-}
-document.getElementById('dumpInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submitDump();}});
+function skipDump(){}
+
 
 function addReminder(){var txt=document.getElementById('rp-text').value.trim();var time=document.getElementById('rp-time').value;if(!txt||!time){alert('Fyll inn tekst og tidspunkt.');return;}if(!_remindersCol)return;window.__fb.addDoc(_remindersCol,{text:txt,time:time,fired:false,date:today(),createdAt:Date.now()});document.getElementById('rp-text').value='';document.getElementById('rp-time').value='';}
 function deleteReminder(id){if(_remindersCol)window.__fb.deleteDoc(_rDoc(id));}
